@@ -31,11 +31,13 @@ model Account {
 }
 
 model Transaction {
-  id         Int      @id @default(autoincrement())
-  amount     Int
+  id         String   @id @default(cuid())
+  amount     Float
+  senderId   String
+  receiverId String
   createdAt  DateTime @default(now())
-  senderId   Int
-  receiverId Int
-  sender     Account  @relation("SentTransactions", fields: [senderId], references: [id])
-  receiver   Account  @relation("ReceivedTransactions", fields: [receiverId], references: [id])
+  
+  sender     User     @relation("SentTransactions", fields: [senderId], references: [id])
+  receiver   User     @relation("ReceivedTransactions", fields: [receiverId], references: [id])
 }
+
